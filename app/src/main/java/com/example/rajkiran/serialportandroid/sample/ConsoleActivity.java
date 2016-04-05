@@ -17,7 +17,11 @@
 package com.example.rajkiran.serialportandroid.sample;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -40,11 +44,40 @@ public class ConsoleActivity extends SerialPortActivity {
 
 		EditText Emission = (EditText) findViewById(R.id.EditTextEmission);
 		Emission.setOnEditorActionListener(new OnEditorActionListener() {
+			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				int i;
-				CharSequence t = v.getText();
+
+				if (actionId == EditorInfo.IME_ACTION_SEND) {
+					//some_button.performClick();
+					CharSequence t = v.getText();
+					char[] text = new char[t.length()];
+					for (int i = 0; i < t.length(); i++) {
+						text[i] = t.charAt(i);
+					}
+					try {
+						mOutputStream.write(new String(text).getBytes());
+						mOutputStream.write('\n');
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+					return true;
+				}
+				return false;
+			}
+		});
+
+		/*Emission.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				CharSequence t = s.toString();
 				char[] text = new char[t.length()];
-				for (i=0; i<t.length(); i++) {
+				for (int i=0; i<t.length(); i++) {
 					text[i] = t.charAt(i);
 				}
 				try {
@@ -53,11 +86,40 @@ public class ConsoleActivity extends SerialPortActivity {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				return false;
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+
+				//handled = true;*//**//*
+			}
+		});*/
+		/*Emission.setOnEditorActionListener(new OnEditorActionListener() {
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				int i;
+				boolean handled = false;
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					//sendMessage();
+					*//*CharSequence t = v.getText();
+					char[] text = new char[t.length()];
+					for (i=0; i<t.length(); i++) {
+						text[i] = t.charAt(i);
+					}
+					try {
+						mOutputStream.write(new String(text).getBytes());
+						mOutputStream.write('\n');
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					handled = true;*//*
+				}
+
+				return handled;
 			}
 		});
-	}
+	}*/
 
+	}
 	@Override
 	protected void onDataReceived(final byte[] buffer, final int size) {
 		runOnUiThread(new Runnable() {
