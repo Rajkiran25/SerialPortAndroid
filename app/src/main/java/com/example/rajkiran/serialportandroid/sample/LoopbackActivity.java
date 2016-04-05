@@ -17,6 +17,7 @@
 package com.example.rajkiran.serialportandroid.sample;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.rajkiran.serialportandroid.R;
@@ -70,8 +71,10 @@ public class LoopbackActivity extends SerialPortActivity {
 						runOnUiThread(new Runnable() {
 							public void run() {
 								mTextViewOutgoing.setText(mOutgoing.toString());
+								Log.d("incoming", mOutgoing.toString());
 								mTextViewLost.setText(mLost.toString());
 								mTextViewIncoming.setText(mIncoming.toString());
+								Log.d("incoming",mIncoming.toString());
 								mTextViewCorrupted.setText(mCorrupted.toString());
 							}
 						});

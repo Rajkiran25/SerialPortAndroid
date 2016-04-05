@@ -19,12 +19,14 @@ package com.example.rajkiran.serialportandroid.sample;
 import android.app.Application;
 import android.content.SharedPreferences;
 
-import com.example.rajkiran.serialportandroid.SerialPort;
+
 import com.example.rajkiran.serialportandroid.SerialPortFinder;
 
 import java.io.File;
 import java.io.IOException;
 import java.security.InvalidParameterException;
+
+import android_serialport_api.SerialPort;
 
 public class SampleApplication extends Application {
 
@@ -34,9 +36,10 @@ public class SampleApplication extends Application {
 	public SerialPort getSerialPort() throws SecurityException, IOException, InvalidParameterException {
 		if (mSerialPort == null) {
 			/* Read serial port parameters */
-			SharedPreferences sp = getSharedPreferences("com.example.rajkiran.serialportandroid.sample_preferences", MODE_PRIVATE);
+			SharedPreferences sp = getSharedPreferences("android_serialport_api.sample_preferences", MODE_PRIVATE);
 			String path = sp.getString("DEVICE", "/dev/ttyS0");
-			int baudrate = Integer.decode(sp.getString("BAUDRATE", "1152000"));
+			//String dev = "/dev/ttyS0";
+			int baudrate = Integer.decode(sp.getString("BAUDRATE", "115200"));
 
 			/* Check parameters */
 			if ( (path.length() == 0) || (baudrate == -1)) {
@@ -44,7 +47,7 @@ public class SampleApplication extends Application {
 			}
 
 			/* Open the serial port */
-			mSerialPort = new SerialPort(new File(path), baudrate, 0);
+			mSerialPort = new SerialPort(path, baudrate, 0);
 		}
 		return mSerialPort;
 	}

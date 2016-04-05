@@ -23,12 +23,14 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 
 import com.example.rajkiran.serialportandroid.R;
-import com.example.rajkiran.serialportandroid.SerialPort;
+
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.InvalidParameterException;
+
+import android_serialport_api.SerialPort;
 
 public abstract class SerialPortActivity extends Activity {
 
