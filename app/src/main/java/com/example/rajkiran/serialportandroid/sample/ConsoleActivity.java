@@ -29,6 +29,7 @@ import android.widget.TextView.OnEditorActionListener;
 import com.example.rajkiran.serialportandroid.R;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class ConsoleActivity extends SerialPortActivity {
 
@@ -47,8 +48,9 @@ public class ConsoleActivity extends SerialPortActivity {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-				if (actionId == EditorInfo.IME_ACTION_SEND) {
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
 					//some_button.performClick();
+					Log.d("imeOptionDone",v.getText().toString());
 					CharSequence t = v.getText();
 					char[] text = new char[t.length()];
 					for (int i = 0; i < t.length(); i++) {
@@ -60,7 +62,6 @@ public class ConsoleActivity extends SerialPortActivity {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-
 					return true;
 				}
 				return false;
